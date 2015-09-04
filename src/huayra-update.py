@@ -59,11 +59,15 @@ class HuayraUpdateIcon(wx.TaskBarIcon):
         super(HuayraUpdateIcon, self).__init__()
         self.frame = frame
 
-        self.icon = wx.IconFromBitmap(wx.Bitmap(os.path.join(
-            wx.GetApp().app_path,
-            'media',
-            'huayra-update.png'
-        )))
+        self.bmp = wx.ArtProvider.GetBitmap('huayra-update')
+        if ( self.bmp == wx.NullBitmap ):
+            self.bmp = wx.Bitmap(os.path.join(
+                wx.GetApp().app_path,
+                'media',
+                'huayra-update.png'
+            )) 
+        self.icon = wx.IconFromBitmap(self.bmp)
+
         self.change_tooltip(u'Hay actualizaciones de Huayra disponibles.')
 
         self.Bind(wx.EVT_TASKBAR_LEFT_DOWN, self.OnUpdate)
